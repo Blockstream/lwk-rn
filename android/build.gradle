@@ -58,5 +58,5 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-android:0.75.2'
     implementation 'com.facebook.react:hermes-android:0.75.2'
-    implementation 'com.blockstream:lwk_bindings:test'
+    implementation 'com.blockstream:lwk_bindings:0.8.2'
 }

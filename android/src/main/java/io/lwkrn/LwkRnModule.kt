@@ -37,6 +37,7 @@ class LwkRnModule(reactContext: ReactApplicationContext) :
   private var _signers = mutableMapOf<String, Signer>()
   private var _txBuilders = mutableMapOf<String, TxBuilder>()
   private var _contracts = mutableMapOf<String, Contract>()
+  private var _bips = mutableMapOf<String, Bip>()
 
   /* Descriptor */
 
@@ -59,6 +60,47 @@ class LwkRnModule(reactContext: ReactApplicationContext) :
     result: Promise
   ) {
     result.resolve(_descriptors[keyId]!!.toString())
+  }
+
+  /* Bip */
+
+  @ReactMethod
+  fun newBip49(
+    result: Promise
+  ) {
+    try {
+      val id = randomId()
+      _bips[id] = Bip.newBip49()
+      result.resolve(id)
+    } catch (error: Throwable) {
+      result.reject("Bip newBip49 error", error.localizedMessage, error)
+    }
+  }
+
+  @ReactMethod
+  fun newBip84(
+    result: Promise
+  ) {
+    try {
+      val id = randomId()
+      _bips[id] = Bip.newBip84()
+      result.resolve(id)
+    } catch (error: Throwable) {
+      result.reject("Bip newBip84 error", error.localizedMessage, error)
+    }
+  }
+
+  @ReactMethod
+  fun newBip87(
+    result: Promise
+  ) {
+    try {
+      val id = randomId()
+      _bips[id] = Bip.newBip87()
+      result.resolve(id)
+    } catch (error: Throwable) {
+      result.reject("Bip newBip87 error", error.localizedMessage, error)
+    }
   }
 
   /* Signer */
@@ -109,6 +151,53 @@ class LwkRnModule(reactContext: ReactApplicationContext) :
       result.resolve(id)
     } catch (error: Throwable) {
       result.reject("Signer wpkhSlip77Descriptor error", error.localizedMessage, error)
+    }
+  }
+
+  @ReactMethod
+  fun keyoriginXpub(
+    signerId: String,
+    bipId: String,
+    result: Promise
+  ) {
+    try {
+      val id = randomId()
+      val signer = _signers[signerId]
+      val bip = _bips[bipId]
+      val res = signer!!.keyoriginXpub(bip!!)
+      result.resolve(res)
+    } catch (error: Throwable) {
+      result.reject("Signer keyoriginXpub error", error.localizedMessage, error)
+    }
+  }
+
+  @ReactMethod
+  fun mnemonic(
+    signerId: String,
+    result: Promise
+  ) {
+    try {
+      val id = randomId()
+      val signer = _signers[signerId]
+      val res = signer!!.mnemonic()
+      result.resolve(res)
+    } catch (error: Throwable) {
+      result.reject("Signer mnemonic error", error.localizedMessage, error)
+    }
+  }
+
+  @ReactMethod
+  fun createRandomSigner(
+    network: String,
+    result: Promise
+  ) {
+    try {
+      val id = randomId()
+      val networkObj = setNetwork(network)
+      _signers[id] = Signer.random(networkObj)
+      result.resolve(id)
+    } catch (error: Throwable) {
+      result.reject("Signer createRandomSigner error", error.localizedMessage, error)
     }
   }
 

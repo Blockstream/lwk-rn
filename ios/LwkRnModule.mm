@@ -3,6 +3,20 @@
 
 @interface RCT_EXTERN_MODULE(LwkRnModule, NSObject)
 
+    /** Bip Methods */
+    RCT_EXTERN_METHOD(
+                      newBip49: (RCTPromiseResolveBlock)resolve
+                      reject: (RCTPromiseRejectBlock)reject
+                      )
+    RCT_EXTERN_METHOD(
+                      newBip84: (RCTPromiseResolveBlock)resolve
+                      reject: (RCTPromiseRejectBlock)reject
+                      )
+    RCT_EXTERN_METHOD(
+                      newBip87: (RCTPromiseResolveBlock)resolve
+                      reject: (RCTPromiseRejectBlock)reject
+                      )
+
     /** Signers Methods */
     RCT_EXTERN_METHOD(
                       createSigner: (nonnull NSString)mnemonic
@@ -18,6 +32,22 @@
                       )
     RCT_EXTERN_METHOD(
                       wpkhSlip77Descriptor: (nonnull NSString)signerId
+                      resolve: (RCTPromiseResolveBlock)resolve
+                      reject: (RCTPromiseRejectBlock)reject
+                      )
+    RCT_EXTERN_METHOD(
+                      keyoriginXpub: (nonnull NSString)signerId
+                      bipId: (nonnull NSString)bipId
+                      resolve: (RCTPromiseResolveBlock)resolve
+                      reject: (RCTPromiseRejectBlock)reject
+                      )
+    RCT_EXTERN_METHOD(
+                      mnemonic: (nonnull NSString)signerId
+                      resolve: (RCTPromiseResolveBlock)resolve
+                      reject: (RCTPromiseRejectBlock)reject
+                      )
+    RCT_EXTERN_METHOD(
+                      createRandomSigner: (nonnull NSString)network
                       resolve: (RCTPromiseResolveBlock)resolve
                       reject: (RCTPromiseRejectBlock)reject
                       )

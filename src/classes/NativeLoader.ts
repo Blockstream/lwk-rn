@@ -26,6 +26,9 @@ export interface NativeLwk {
   createSigner(mnemonic: string, network: Network): string;
   sign(signerId: string, psetId: string): string;
   wpkhSlip77Descriptor(signerId: string): string;
+  keyoriginXpub(signerId: string, bipId: string): string;
+  createRandomSigner(network: Network): string;
+  mnemonic(signerId: string): string;
 
   // Wollet
   createWollet(
@@ -94,6 +97,11 @@ export interface NativeLwk {
     version: number
   ): string;
   contractAsString(id: string): string;
+
+  // Bip
+  newBip49(): string;
+  newBip84(): string;
+  newBip87(): string;
 }
 
 export class NativeLoader {

@@ -15,6 +15,7 @@ class LwkRnModule: NSObject {
     var _psets: [String: Pset] = [:]
     var _txBuilders: [String: TxBuilder] = [:]
     var _contracts: [String: Contract] = [:]
+    var _bips: [String: Bip] = [:]
     
     /* WolletDescriptor */
     @objc
@@ -40,7 +41,48 @@ class LwkRnModule: NSObject {
         resolve(_descriptors[keyId]!.description)
     }
     
+    /* Bip */
+    @objc
+    func newBip49(
+        resolve: RCTPromiseResolveBlock,
+        reject: RCTPromiseRejectBlock
+    ) -> Void {
+        do {
+            let id = randomId()
+            _bips[id] = try Bip.newBip49()
+            resolve(id)
+        } catch {
+            reject("Bip newBip49 error", error.localizedDescription, error)
+        }
+    }
 
+    @objc
+    func newBip84(
+        resolve: RCTPromiseResolveBlock,
+        reject: RCTPromiseRejectBlock
+    ) -> Void {
+        do {
+            let id = randomId()
+            _bips[id] = try Bip.newBip84()
+            resolve(id)
+        } catch {
+            reject("Bip newBip84 error", error.localizedDescription, error)
+        }
+    }
+
+    @objc
+    func newBip87(
+        resolve: RCTPromiseResolveBlock,
+        reject: RCTPromiseRejectBlock
+    ) -> Void {
+        do {
+            let id = randomId()
+            _bips[id] = try Bip.newBip87()
+            resolve(id)
+        } catch {
+            reject("Bip newBip87 error", error.localizedDescription, error)
+        }
+    }
     
     /* Signer */
     @objc
@@ -92,6 +134,54 @@ class LwkRnModule: NSObject {
             resolve(id)
         } catch {
             reject("Signer wpkhSlip77Descriptor error", error.localizedDescription, error)
+        }
+    }
+
+    @objc
+    func keyoriginXpub(
+        _ signerId: String,
+        _ bipId: String,
+        resolve: RCTPromiseResolveBlock,
+        reject: RCTPromiseRejectBlock
+    ) -> Void {
+        do {
+            let signer = _signers[signerId]
+            let bip = _bips[bipId]
+            let res = try signer?.keyoriginXpub(bip)
+            resolve(res)
+        } catch {
+            reject("Signer keyoriginXpub error", error.localizedDescription, error)
+        }
+    }
+
+    @objc
+    func mnemonic(
+        _ signerId: String,
+        resolve: RCTPromiseResolveBlock,
+        reject: RCTPromiseRejectBlock
+    ) -> Void {
+        do {
+            let signer = _signers[signerId]
+            let res = try signer?.mnemonic()
+            resolve(res)
+        } catch {
+            reject("Signer mnemonic error", error.localizedDescription, error)
+        }
+    }
+
+    @objc
+    func createRandomSigner(
+        _ network: String,
+        resolve: RCTPromiseResolveBlock,
+        reject: RCTPromiseRejectBlock
+    ) -> Void {
+        do {
+            let id = randomId()
+            let network = setNetwork(networkStr: network)
+            _signers[id] = try Signer.random(network: network)
+            resolve(id)
+        } catch {
+            reject("Signer createRandomSigner error", error.localizedDescription, error)
         }
     }
     
