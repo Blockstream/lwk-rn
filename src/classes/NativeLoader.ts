@@ -9,9 +9,16 @@ const LINKING_ERROR =
   '- You are not using Expo Go\n';
 
 export interface NativeLwk {
-  // Descriptor
-  createDescriptor(descriptor: string): string;
-  descriptorAsString(id: string): string;
+  // WolletDescriptor
+  WolletDescriptorInit(descriptor: string): string;
+  wolletDescriptorDescription(id: string): string;
+  wolletDescriptorIsMainnet(id: string): boolean;
+  wolletDescriptorDeriveBlindingKey(id: string, scriptPubkey: string): string;
+  wolletDescriptorScriptPubkey(
+    id: string,
+    extInt: string,
+    index: number
+  ): string;
 
   // Electrum Client
   initElectrumClient(

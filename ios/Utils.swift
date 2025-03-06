@@ -65,10 +65,16 @@ func getAddressObject(address: Address?) -> [String: Any?] {
     ] as [String: Any?]
 }
 
-func setChain(chain: String? = "external") -> Chain {
+func getChain(chain: String? = "external") -> Chain {
     switch (chain) {
     case "external": return Chain.external
     case "internal": return Chain.internal
     default: return Chain.external
+    }
+}
+
+extension Data {
+    var hex: String {
+        return reduce("") {$0 + String(format: "%02x", $1)}
     }
 }

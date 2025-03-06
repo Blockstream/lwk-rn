@@ -55,13 +55,31 @@
     /** Descriptors Methods */
     
     RCT_EXTERN_METHOD(
-                      createDescriptor: (nonnull NSString)descriptor
+                      wolletDescriptorInit: (nonnull NSString)descriptor
                       resolve: (RCTPromiseResolveBlock)resolve
                       reject:(RCTPromiseRejectBlock)reject
                       )
     
     RCT_EXTERN_METHOD(
-                      descriptorAsString: (nonnull NSString)keyId
+                      wolletDescriptorDescription: (nonnull NSString)keyId
+                      resolve: (RCTPromiseResolveBlock)resolve
+                      reject:(RCTPromiseRejectBlock)reject
+                      )
+    RCT_EXTERN_METHOD(
+                      wolletDescriptorIsMainnet: (nonnull NSString)keyId
+                      resolve: (RCTPromiseResolveBlock)resolve
+                      reject:(RCTPromiseRejectBlock)reject
+                      )
+    RCT_EXTERN_METHOD(
+                      wolletDescriptorDeriveBlindingKey: (nonnull NSString)keyId
+                      scriptPubkey: (nonnull NSString)scriptPubkey
+                      resolve: (RCTPromiseResolveBlock)resolve
+                      reject:(RCTPromiseRejectBlock)reject
+                      )
+    RCT_EXTERN_METHOD(
+                      wolletDescriptorScriptPubkey: (nonnull NSString)keyId
+                      extInt: (nonnull NSString)extInt
+                      index: (nonnull NSNumber)index
                       resolve: (RCTPromiseResolveBlock)resolve
                       reject:(RCTPromiseRejectBlock)reject
                       )

@@ -65,3 +65,14 @@ fun getWalletTxOutObject(out: WalletTxOut?): MutableMap<String, Any?> {
         "wildcard_index" to out?.wildcardIndex()?.toInt()
   )
 }
+
+fun getChain(chain: String? = "external"): Chain {
+  return when (networkStr) {
+    "external": Chain.external
+    "internal": Chain.internal
+    else: Chain.external
+  }
+}
+fun ByteArray.toHexString() = joinToString("") {
+    Integer.toUnsignedString(java.lang.Byte.toUnsignedInt(it), 16).padStart(2, '0')
+}

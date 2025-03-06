@@ -43,7 +43,7 @@ class LwkRnModule(reactContext: ReactApplicationContext) :
   /* Descriptor */
 
   @ReactMethod
-  fun createDescriptor(
+  fun wolletDescriptorInit(
     descriptor: String, result: Promise
   ) {
     try {
@@ -56,11 +56,52 @@ class LwkRnModule(reactContext: ReactApplicationContext) :
   }
 
   @ReactMethod
-  fun descriptorAsString(
+  fun wolletDescriptorDescription(
     keyId: String,
     result: Promise
   ) {
     result.resolve(_descriptors[keyId]!!.toString())
+  }
+
+  @ReactMethod
+  fun wolletDescriptorIsMainnet(
+    keyId: String,
+    result: Promise
+  ) {
+    result.resolve(_descriptors[keyId]!!.isMainnet())
+  }
+
+  @ReactMethod
+  fun wolletDescriptorDeriveBlindingKey(
+    keyId: String,
+    scriptPubkey: String,
+    result: Promise
+  ) {
+      val scriptPubkey = Script(scriptPubkey)
+      val descriptor = _descriptors[keyId]
+      val secretKey = descriptor!!.deriveBlindingKey(scriptPubkey)
+      if (secretKey == null) {
+        result.reject("WolletDescriptor deriveBlindingKey error: no derived secret key")
+        return
+      }
+      result.resolve(secretKey!!.bytes().toHexString())
+    }
+  }
+  @ReactMethod
+  fun wolletDescriptorScriptPubkey(
+    keyId: String,
+    extInt: String,
+    index: Int,
+    result: Promise
+  ) {
+      try {
+            val extInt = getChain(keyId)
+            val descriptor = _descriptors[keyId]
+            val script = descriptor!!.scriptPubkey(extInt, index.toUInt())
+            resolve(script.bytes().hex)
+        } catch (error: Throwable) {
+          result.reject("WolletDescriptor scriptPubkey error", error.localizedMessage, error)
+        }
   }
 
   /* Bip */
