@@ -525,26 +525,6 @@ class LwkRnModule(reactContext: ReactApplicationContext) :
     }
   }
 
-  @ReactMethod
-  fun psetIssuanceAsset(id: String, index: Int, result: Promise) {
-    try {
-      val assetId = _psets[id]?.issuanceAsset(index.toUInt())
-      result.resolve(assetId)
-    } catch (error: Throwable) {
-      result.reject("Pset issuanceAsset error", error.localizedMessage, error)
-    }
-  }
-
-  @ReactMethod
-  fun psetIssuanceToken(id: String, index: Int, result: Promise) {
-    try {
-      val assetId = _psets[id]?.issuanceToken(index.toUInt())
-      result.resolve(assetId)
-    } catch (error: Throwable) {
-      result.reject("Pset issuanceToken error", error.localizedMessage, error)
-    }
-  }
-
   /* TxBuilder */
   @ReactMethod
   fun createTxBuilder(

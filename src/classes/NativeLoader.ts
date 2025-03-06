@@ -62,8 +62,6 @@ export interface NativeLwk {
   createPset(base64: string): string;
   psetAsString(psetId: string): string;
   psetExtractTx(psetId: string): string;
-  psetIssuanceAsset(id: string, index: number): string;
-  psetissuanceToken(id: string, index: number): string;
 
   // TxBuilder
   createTxBuilder(network: string): string;
@@ -78,7 +76,6 @@ export interface NativeLwk {
   txBuilderDrainLbtcTo(id: string, address: string): null;
   txBuilderDrainLbtcWallet(id: string): null;
   txBuilderFeeRate(id: string, rate: number | null): null;
-  txBuilderEnableDiscount(id: string): null;
   txBuilderFinish(id: string, wolletId: string): string;
   txBuilderIssueAsset(
     id: string,

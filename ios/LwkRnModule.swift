@@ -472,26 +472,6 @@ class LwkRnModule: NSObject {
         }
     }
     
-    @objc
-    func issuanceAsset(_
-                       id: String,
-                       index: NSNumber,
-                       resolve: RCTPromiseResolveBlock,
-                       reject: RCTPromiseRejectBlock
-    ) -> Void {
-        resolve(_psets[id]?.issuanceAsset(index: index.uint32Value))
-    }
-    
-    @objc
-    func issuanceToken(_
-                       id: String,
-                       index: NSNumber,
-                       resolve: RCTPromiseResolveBlock,
-                       reject: RCTPromiseRejectBlock
-    ) -> Void {
-        resolve(_psets[id]?.issuanceToken(index: index.uint32Value))
-    }
-    
     /* TxBuilder */
     
     @objc

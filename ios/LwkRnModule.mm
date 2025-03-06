@@ -206,19 +206,6 @@
                       reject:(RCTPromiseRejectBlock)reject
                       )
     
-    RCT_EXTERN_METHOD(
-                      issuanceAsset: (nonnull NSString)id
-                      index: (nonnull NSNumber)index
-                      resolve: (RCTPromiseResolveBlock)resolve
-                      reject:(RCTPromiseRejectBlock)reject
-                      )
-    RCT_EXTERN_METHOD(
-                      issuanceToken: (nonnull NSString)id
-                      index: (nonnull NSNumber)index
-                      resolve: (RCTPromiseResolveBlock)resolve
-                      reject:(RCTPromiseRejectBlock)reject
-                      )
-    
     /** TxBuilder Methods */
     RCT_EXTERN_METHOD(
                       createTxBuilder: (nonnull NSString)network

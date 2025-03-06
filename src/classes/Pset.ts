@@ -22,12 +22,4 @@ export class Pset extends NativeLoader {
   async asString(): Promise<string> {
     return this._lwk.psetAsString(this.id);
   }
-
-  async issuanceAsset(index: number): Promise<string> {
-    return this._lwk.psetIssuanceAsset(this.id, index);
-  }
-
-  async issuanceToken(index: number): Promise<string> {
-    return this._lwk.psetissuanceToken(this.id, index);
-  }
 }
