@@ -44,9 +44,6 @@ export class TxBuilder extends NativeLoader {
   async feeRate(rate: number | null): Promise<null> {
     return await this._lwk.txBuilderFeeRate(this.id, rate);
   }
-  async enableDiscount(): Promise<null> {
-    return await this._lwk.txBuilderEnableDiscount(this.id);
-  }
 
   async finish(wollet: Wollet): Promise<Pset> {
     let psetId = await this._lwk.txBuilderFinish(this.id, wollet.id);

@@ -271,11 +271,6 @@
                       reject:(RCTPromiseRejectBlock)reject
                       )
     RCT_EXTERN_METHOD(
-                      txEnableDiscount: (nonnull NSString)id
-                      resolve: (RCTPromiseResolveBlock)resolve
-                      reject:(RCTPromiseRejectBlock)reject
-                      )
-    RCT_EXTERN_METHOD(
                       txBuilderIssueAsset: (nonnull NSString)id
                       assetSats: (nonnull NSNumber)assetSats
                       assetReceiver: (NSString)assetReceiver

@@ -627,16 +627,6 @@ class LwkRnModule(reactContext: ReactApplicationContext) :
   }
 
   @ReactMethod
-  fun txBuilderEnableDiscount(id: String, result: Promise) {
-    try {
-      _txBuilders[id]!!.enableCtDiscount()
-      result.resolve(null)
-    } catch (error: Throwable) {
-      result.reject("TxBuilder enableCtDiscount error", error.localizedMessage, error)
-    }
-  }
-
-  @ReactMethod
   fun txBuilderFinish(id: String, wolletId: String, result: Promise) {
     try {
       val newId = randomId()
