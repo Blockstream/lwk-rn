@@ -3,6 +3,10 @@ pre-commit:
   commands:
     lint:
       glob: "*.{js,ts,jsx,tsx}"
+      exclude: 
+         - android/
+         - cpp/
+         - src/
       run: npx eslint {staged_files}
     types:
       glob: "*.{js,ts, jsx, tsx}"

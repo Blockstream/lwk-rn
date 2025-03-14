@@ -2,7 +2,7 @@
 
 **LWK-rn** is a React Native module for [Liquid Wallet Kit](https://github.com/Blockstream/lwk). Its goal is to provide all the necessary building blocks for mobile development of a liquid wallet.
 
-** NOTE: LWK and LWK-rn is in public beta and still undergoing significant development. Use it at your own risk. **
+**NOTE: LWK and LWK-rn is in public beta and still undergoing significant development. Use it at your own risk.**
 
 _Please consider reviewing, experimenting and contributing_
 
@@ -22,76 +22,135 @@ Using yarn:
 yarn add lwk-rn
 ```
 
-[iOS Only] Install pods:
+Note: Use android sdk version >= 24 and iOS >= v13 .
 
-```bash
-npx pod-install
-or
-cd ios && pod install
+## Usage
+
+Import LWK-rn library
+
+```js
+import { Mnemonic, Network, Signer, Wollet } from 'lwk-rn';
 ```
 
-Note: Use android sdk version >= 23 and iOS >= v13 .
+Create a signer for a mnemonic and a network
+```js
+let mnemonic = new Mnemonic("abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about"); 
+let network = Network.testnet();
+let signer = new Signer(mnemonic, network);
+console.log(mnemonic.toString());
+```
 
-### Examples
+Create and update a wollet from the signer descriptor
+```js
+let singlesigDesc = signer.wpkhSlip77Descriptor();
+let wollet = new Wollet(network, singlesigDesc, undefined);
+let client = network.defaultElectrumClient();
+let update = client.fullScan(wollet);
+if (update) { 
+  wollet.applyUpdate(update);
+}
+```
 
-You could run the example in iOS or android by the following
+Get a new unused address
+```js
+let latest_address = wollet.address(undefined); 
+console.log(latest_address.address().scriptPubkey().toString());
+```
+
+Get balance as `[AssetId : UInt64]`
+```js
+let balance = wollet.balance();
+console.log(balance);
+for (var b of balance.entries()) {
+  console.log("asset: ", b[0], ", value: ", b[1]);
+}
+```
+
+Get a transaction list
+```js
+let txs = wollet.transactions();
+console.log(txs);
+for (var tx of txs) {
+  for (var output of tx.outputs()) {
+    let script_pubkey = output?.scriptPubkey().toString();
+    let value = output?.unblinded().value().toString();
+    console.log("script_pubkey: ", script_pubkey, ", value: ", value);
+  }
+}
+```
+
+## Build
+
+LWK-rn repository contains the pre-generated lwk bindings for android and ios. 
+
+Follow the steps to generate bindings by your own:
+
+Install C++ tooling
+
 ```sh
-$ yarn example ios
-...
+# For MacOS, using homebrew:
+brew install cmake ninja clang-format
+# For Debian flavoured Linux:
+apt-get install cmake ninja clang-format
+```
+
+Add the Android specific targets
+```sh
+rustup target add \
+    aarch64-linux-android \
+    armv7-linux-androideabi \
+    i686-linux-android \
+    x86_64-linux-android
+# Install cargo-ndk
+cargo install cargo-ndk
+```
+
+Add the iOS specific targets
+```sh
+rustup target add \
+    aarch64-apple-ios \
+    aarch64-apple-ios-sim \
+    x86_64-apple-ios
+# Ensure xcodebuild is available
+xcode-select --install
+```
+
+Install deps and `uniffi-bindgen-react-native`.
+
+```sh
+$ yarn install
+```
+
+Fetch LWK library with some hacks.
+> The script changes path to avoid using workspace configuration and rust version. The project require rust >= v1.18 . The scipt replacing package name in `Cargo.toml` for a library name bug in `uniffi-bindgen-react-native`.
+```sh
+$ sh fetch_lwk.sh
+```
+
+Generate bindings for android and ios:
+```sh
+$ yarn ubrn:android
+$ yarn ubrn:ios
+```
+
+## Example
+
+Open demo application in `./example/` folder and read the code in `./example/src/App.tsx` .
+
+You could run the example on the Android demo app on device/emulator by:
+```sh
 $ yarn example android
 ```
 
-Create a Wallet and sync with Electrum client
-
-```js
-import { Wollet, Client, Signer, Network } from 'lwk-rn';
-
-const mnemonic =
-        'abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about';
-const network = Network.Testnet;
-const signer = await new Signer().create(mnemonic, network);
-const descriptor = await signer.wpkhSlip77Descriptor();
-console.log(await descriptor.asString());
-
-const wollet = await new Wollet().create(network, descriptor, null);
-const client = await new Client().defaultElectrumClient(network);
-const update = await client.fullScan(wollet);
-await wollet.applyUpdate(update);
+Or you could run the iOS demo app by:
+```sh
+$ cd example
+$ bundle install
+$ bundle exec pod install # every time you update your native dependencies
+$ cd ..
+$ yarn example ios
 ```
 
-Get a new address:
-```js
-const address = await wollet.getAddress();
-console.log(address);
-```
-
-Get a transaction list:
-```js
-const transactions = await wollet.getTransactions();
-console.log(transactions);
-```
-
-Get balance as `[AssetId : UInt64]`:
-```js
-const balance = await wollet.getBalance();
-console.log(balance);
-```
-
-Build, sign and broadcast a Transaction:
-```js
-    const out_address = await wollet.getAddress().description;
-    const satoshis = 900;
-    const fee_rate = 280; // this is the sat/vB * 100 fee rate. Example 280 would equal a fee rate of .28 sat/vB. 100 would equal .1 sat/vB
-    const builder = await new TxBuilder().create(network);
-    await builder.addLbtcRecipient(out_address, satoshis);
-    await builder.feeRate(fee_rate);
-    let pset = await builder.finish(wollet);
-    let signed_pset = await signer.sign(pset);
-    let finalized_pset = await wollet.finalize(signed_pset);
-    const tx = await finalized_pset.extractTx();
-    await client.broadcast(tx);
-    console.log("BROADCASTED TX!\nTXID: {:?}", (await tx.txId.toString()));
-```
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
@@ -115,3 +174,4 @@ MIT
 ---
 
 Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+using [uniffi-bindgen-react-native](https://github.com/jhugman/uniffi-bindgen-react-native)

@@ -1,56 +1,46 @@
-import { useState, useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
+import { Mnemonic, Network, Signer, Wollet } from 'lwk-rn';
 
-import { Wollet, Client, Signer, Network } from 'lwk-rn';
+let mnemonic = new Mnemonic("abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about"); 
+let network = Network.testnet();
+let signer = new Signer(mnemonic, network);
+console.log(mnemonic.toString());
+
+let singlesigDesc = signer.wpkhSlip77Descriptor();
+let wollet = new Wollet(network, singlesigDesc, undefined);
+
+// update wallet
+let client = network.defaultElectrumClient();
+let update = client.fullScan(wollet);
+if (update) { 
+  wollet.applyUpdate(update);
+}
+
+// generate last unused address
+let latest_address = wollet.address(undefined); 
+console.log(latest_address.address().scriptPubkey().toString());
+
+// show balance
+let balance = wollet.balance();
+console.log(balance);
+for (var b of balance.entries()) {
+  console.log("asset: ", b[0], ", value: ", b[1]);
+}
+
+// show transactions
+let txs = wollet.transactions();
+console.log(txs);
+for (var tx of txs) {
+  for (var output of tx.outputs()) {
+    let script_pubkey = output?.scriptPubkey().toString();
+    let value = output?.unblinded().value().toString();
+    console.log("script_pubkey: ", script_pubkey, ", value: ", value);
+  }
+}
+
+const result = balance.get(network.policyAsset())?.toString();
 
 export default function App() {
-  const [result, setResult] = useState<string | undefined>();
-
-  useEffect(() => {
-    async function setup() {
-      const mnemonic =
-        'abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about';
-      const network = Network.Testnet;
-      const signer = await new Signer().create(mnemonic, network);
-      const descriptor = await signer.wpkhSlip77Descriptor();
-      console.log(await descriptor.asString());
-
-      const wollet = await new Wollet().create(network, descriptor, null);
-      const client = await new Client().defaultElectrumClient(network);
-      const update = await client.fullScan(wollet);
-      await wollet.applyUpdate(update);
-
-      const txs = await wollet.getTransactions();
-      console.log('Get transactions');
-      console.log(txs.length.toString());
-
-      const address = await wollet.getAddress();
-      console.log('Get address');
-      console.log(address);
-
-      const balance = await wollet.getBalance();
-      console.log('Get balance');
-      console.log(balance);
-      /*
-      const out_address = address.description;
-      const satoshis = 900;
-      const fee_rate = 280; // this seems like absolute fees
-      const builder = await new TxBuilder().create(network);
-      await builder.addLbtcRecipient(out_address, satoshis);
-      await builder.feeRate(fee_rate);
-      let pset = await builder.finish(wollet);
-      let signed_pset = await signer.sign(pset);
-      let finalized_pset = await wollet.finalize(signed_pset);
-      const tx = await finalized_pset.extractTx();
-      await client.broadcast(tx);
-      console.log('BROADCASTED TX!\nTXID: {:?}', tx.txId.toString());
-*/
-      setResult(txs.length.toString());
-    }
-
-    setup();
-  }, []);
-
   return (
     <View style={styles.container}>
       <Text>Result: {result}</Text>
@@ -63,10 +53,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
   },
 });

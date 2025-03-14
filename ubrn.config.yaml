@@ -1,0 +1,9 @@
+---
+rust:
+  directory: ./rust_modules/lwk_bindings
+  manifestPath: Cargo.toml
+
+  bindings:
+    cpp: cpp/bindings
+    ts: ts/bindings
+    uniffiToml: ./uniffi.toml

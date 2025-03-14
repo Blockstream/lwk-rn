@@ -1,0 +1,65 @@
+name: CI Generate
+on:
+  workflow_dispatch:
+
+jobs:
+    build-android:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+  
+        - name: Setup
+          uses: ./.github/actions/setup
+
+        - name: Setup rust toolchain
+          uses: dtolnay/rust-toolchain@1.81.0
+          with:
+            targets: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android
+        
+        - name: Install NDK
+          run: cargo install cargo-ndk
+        
+        - name: Fetch LWK
+          run: sh fetch_lwk.sh
+
+        - name: Generate android lib
+          run: yarn ubrn:android --profile release-smaller
+
+        - name: Temporarily save artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: lwk-android-artifact
+            path: android
+            retention-days: 1
+    build-ios:
+      runs-on: macos-14
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+  
+        - name: Setup
+          uses: ./.github/actions/setup
+
+        - name: Setup rust toolchain
+          uses: dtolnay/rust-toolchain@1.81.0
+          with:
+            targets: x86_64-apple-ios,aarch64-apple-ios,aarch64-apple-ios-sim
+        
+        - name: Fetch LWK
+          run: sh fetch_lwk.sh
+
+        - name: Generate ios lib
+          run: yarn ubrn:ios --profile release-smaller
+
+        - name: Strip ios lib
+          run: |
+            strip LwkRnFramework.xcframework/ios-arm64/liblwk.a |
+            strip LwkRnFramework.xcframework/ios-arm64-simulator/liblwk.a
+
+        - name: Temporarily save artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: lwk-ios-artifact
+            path: LwkRnFramework.xcframework
+            retention-days: 1
