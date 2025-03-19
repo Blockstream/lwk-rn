@@ -266,7 +266,19 @@ interface NativeModuleInterface {
     ptr: bigint,
     uniffi_out_err: UniffiRustCallStatus
   ): Uint8Array;
+  ubrn_uniffi_lwk_fn_method_issuance_asset_satoshi(
+    ptr: bigint,
+    uniffi_out_err: UniffiRustCallStatus
+  ): Uint8Array;
+  ubrn_uniffi_lwk_fn_method_issuance_is_confidential(
+    ptr: bigint,
+    uniffi_out_err: UniffiRustCallStatus
+  ): number;
   ubrn_uniffi_lwk_fn_method_issuance_is_issuance(
+    ptr: bigint,
+    uniffi_out_err: UniffiRustCallStatus
+  ): number;
+  ubrn_uniffi_lwk_fn_method_issuance_is_null(
     ptr: bigint,
     uniffi_out_err: UniffiRustCallStatus
   ): number;
@@ -283,6 +295,10 @@ interface NativeModuleInterface {
     uniffi_out_err: UniffiRustCallStatus
   ): Uint8Array;
   ubrn_uniffi_lwk_fn_method_issuance_token(
+    ptr: bigint,
+    uniffi_out_err: UniffiRustCallStatus
+  ): Uint8Array;
+  ubrn_uniffi_lwk_fn_method_issuance_token_satoshi(
     ptr: bigint,
     uniffi_out_err: UniffiRustCallStatus
   ): Uint8Array;
@@ -477,6 +493,10 @@ interface NativeModuleInterface {
     ptr: bigint,
     uniffi_out_err: UniffiRustCallStatus
   ): void;
+  ubrn_uniffi_lwk_fn_method_psetinput_issuance(
+    ptr: bigint,
+    uniffi_out_err: UniffiRustCallStatus
+  ): Uint8Array;
   ubrn_uniffi_lwk_fn_method_psetinput_issuance_asset(
     ptr: bigint,
     uniffi_out_err: UniffiRustCallStatus
@@ -1087,11 +1107,15 @@ interface NativeModuleInterface {
   ubrn_uniffi_lwk_checksum_method_foreignpersister_get(): number;
   ubrn_uniffi_lwk_checksum_method_foreignpersister_push(): number;
   ubrn_uniffi_lwk_checksum_method_issuance_asset(): number;
+  ubrn_uniffi_lwk_checksum_method_issuance_asset_satoshi(): number;
+  ubrn_uniffi_lwk_checksum_method_issuance_is_confidential(): number;
   ubrn_uniffi_lwk_checksum_method_issuance_is_issuance(): number;
+  ubrn_uniffi_lwk_checksum_method_issuance_is_null(): number;
   ubrn_uniffi_lwk_checksum_method_issuance_is_reissuance(): number;
   ubrn_uniffi_lwk_checksum_method_issuance_prev_txid(): number;
   ubrn_uniffi_lwk_checksum_method_issuance_prev_vout(): number;
   ubrn_uniffi_lwk_checksum_method_issuance_token(): number;
+  ubrn_uniffi_lwk_checksum_method_issuance_token_satoshi(): number;
   ubrn_uniffi_lwk_checksum_method_network_default_electrum_client(): number;
   ubrn_uniffi_lwk_checksum_method_network_default_esplora_client(): number;
   ubrn_uniffi_lwk_checksum_method_network_is_mainnet(): number;
@@ -1110,6 +1134,7 @@ interface NativeModuleInterface {
   ubrn_uniffi_lwk_checksum_method_psetdetails_balance(): number;
   ubrn_uniffi_lwk_checksum_method_psetdetails_inputs_issuances(): number;
   ubrn_uniffi_lwk_checksum_method_psetdetails_signatures(): number;
+  ubrn_uniffi_lwk_checksum_method_psetinput_issuance(): number;
   ubrn_uniffi_lwk_checksum_method_psetinput_issuance_asset(): number;
   ubrn_uniffi_lwk_checksum_method_psetinput_issuance_token(): number;
   ubrn_uniffi_lwk_checksum_method_psetinput_previous_script_pubkey(): number;
