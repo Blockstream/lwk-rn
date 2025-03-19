@@ -3,7 +3,7 @@
 # Manually fetch and edit lwk repository
 
 REPO=https://github.com/Blockstream/lwk
-TAG=bindings_0.9.0
+TAG=bindings_0.9.1
 
 rm -rf rust_modules
 mkdir -p rust_modules
