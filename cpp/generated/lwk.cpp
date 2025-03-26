@@ -230,9 +230,17 @@ void *uniffi_lwk_fn_clone_issuance(void *ptr, RustCallStatus *uniffi_out_err);
 void uniffi_lwk_fn_free_issuance(void *ptr, RustCallStatus *uniffi_out_err);
 RustBuffer uniffi_lwk_fn_method_issuance_asset(void *ptr,
                                                RustCallStatus *uniffi_out_err);
+RustBuffer
+uniffi_lwk_fn_method_issuance_asset_satoshi(void *ptr,
+                                            RustCallStatus *uniffi_out_err);
+int8_t
+uniffi_lwk_fn_method_issuance_is_confidential(void *ptr,
+                                              RustCallStatus *uniffi_out_err);
 int8_t
 uniffi_lwk_fn_method_issuance_is_issuance(void *ptr,
                                           RustCallStatus *uniffi_out_err);
+int8_t uniffi_lwk_fn_method_issuance_is_null(void *ptr,
+                                             RustCallStatus *uniffi_out_err);
 int8_t
 uniffi_lwk_fn_method_issuance_is_reissuance(void *ptr,
                                             RustCallStatus *uniffi_out_err);
@@ -244,6 +252,9 @@ uniffi_lwk_fn_method_issuance_prev_vout(void *ptr,
                                         RustCallStatus *uniffi_out_err);
 RustBuffer uniffi_lwk_fn_method_issuance_token(void *ptr,
                                                RustCallStatus *uniffi_out_err);
+RustBuffer
+uniffi_lwk_fn_method_issuance_token_satoshi(void *ptr,
+                                            RustCallStatus *uniffi_out_err);
 void *uniffi_lwk_fn_clone_mnemonic(void *ptr, RustCallStatus *uniffi_out_err);
 void uniffi_lwk_fn_free_mnemonic(void *ptr, RustCallStatus *uniffi_out_err);
 void *
@@ -333,6 +344,9 @@ uniffi_lwk_fn_method_psetdetails_signatures(void *ptr,
                                             RustCallStatus *uniffi_out_err);
 void *uniffi_lwk_fn_clone_psetinput(void *ptr, RustCallStatus *uniffi_out_err);
 void uniffi_lwk_fn_free_psetinput(void *ptr, RustCallStatus *uniffi_out_err);
+RustBuffer
+uniffi_lwk_fn_method_psetinput_issuance(void *ptr,
+                                        RustCallStatus *uniffi_out_err);
 RustBuffer
 uniffi_lwk_fn_method_psetinput_issuance_asset(void *ptr,
                                               RustCallStatus *uniffi_out_err);
@@ -771,11 +785,15 @@ uint16_t uniffi_lwk_checksum_method_esploraclient_full_scan_to_index();
 uint16_t uniffi_lwk_checksum_method_foreignpersister_get();
 uint16_t uniffi_lwk_checksum_method_foreignpersister_push();
 uint16_t uniffi_lwk_checksum_method_issuance_asset();
+uint16_t uniffi_lwk_checksum_method_issuance_asset_satoshi();
+uint16_t uniffi_lwk_checksum_method_issuance_is_confidential();
 uint16_t uniffi_lwk_checksum_method_issuance_is_issuance();
+uint16_t uniffi_lwk_checksum_method_issuance_is_null();
 uint16_t uniffi_lwk_checksum_method_issuance_is_reissuance();
 uint16_t uniffi_lwk_checksum_method_issuance_prev_txid();
 uint16_t uniffi_lwk_checksum_method_issuance_prev_vout();
 uint16_t uniffi_lwk_checksum_method_issuance_token();
+uint16_t uniffi_lwk_checksum_method_issuance_token_satoshi();
 uint16_t uniffi_lwk_checksum_method_network_default_electrum_client();
 uint16_t uniffi_lwk_checksum_method_network_default_esplora_client();
 uint16_t uniffi_lwk_checksum_method_network_is_mainnet();
@@ -794,6 +812,7 @@ uint16_t uniffi_lwk_checksum_method_psetbalance_recipients();
 uint16_t uniffi_lwk_checksum_method_psetdetails_balance();
 uint16_t uniffi_lwk_checksum_method_psetdetails_inputs_issuances();
 uint16_t uniffi_lwk_checksum_method_psetdetails_signatures();
+uint16_t uniffi_lwk_checksum_method_psetinput_issuance();
 uint16_t uniffi_lwk_checksum_method_psetinput_issuance_asset();
 uint16_t uniffi_lwk_checksum_method_psetinput_issuance_token();
 uint16_t uniffi_lwk_checksum_method_psetinput_previous_script_pubkey();
@@ -3220,6 +3239,28 @@ NativeLwk::NativeLwk(jsi::Runtime &rt,
             return this->cpp_uniffi_lwk_fn_method_issuance_asset(rt, thisVal,
                                                                  args, count);
           });
+  props["ubrn_uniffi_lwk_fn_method_issuance_asset_satoshi"] =
+      jsi::Function::createFromHostFunction(
+          rt,
+          jsi::PropNameID::forAscii(
+              rt, "ubrn_uniffi_lwk_fn_method_issuance_asset_satoshi"),
+          1,
+          [this](jsi::Runtime &rt, const jsi::Value &thisVal,
+                 const jsi::Value *args, size_t count) -> jsi::Value {
+            return this->cpp_uniffi_lwk_fn_method_issuance_asset_satoshi(
+                rt, thisVal, args, count);
+          });
+  props["ubrn_uniffi_lwk_fn_method_issuance_is_confidential"] =
+      jsi::Function::createFromHostFunction(
+          rt,
+          jsi::PropNameID::forAscii(
+              rt, "ubrn_uniffi_lwk_fn_method_issuance_is_confidential"),
+          1,
+          [this](jsi::Runtime &rt, const jsi::Value &thisVal,
+                 const jsi::Value *args, size_t count) -> jsi::Value {
+            return this->cpp_uniffi_lwk_fn_method_issuance_is_confidential(
+                rt, thisVal, args, count);
+          });
   props["ubrn_uniffi_lwk_fn_method_issuance_is_issuance"] =
       jsi::Function::createFromHostFunction(
           rt,
@@ -3230,6 +3271,17 @@ NativeLwk::NativeLwk(jsi::Runtime &rt,
                  const jsi::Value *args, size_t count) -> jsi::Value {
             return this->cpp_uniffi_lwk_fn_method_issuance_is_issuance(
                 rt, thisVal, args, count);
+          });
+  props["ubrn_uniffi_lwk_fn_method_issuance_is_null"] =
+      jsi::Function::createFromHostFunction(
+          rt,
+          jsi::PropNameID::forAscii(
+              rt, "ubrn_uniffi_lwk_fn_method_issuance_is_null"),
+          1,
+          [this](jsi::Runtime &rt, const jsi::Value &thisVal,
+                 const jsi::Value *args, size_t count) -> jsi::Value {
+            return this->cpp_uniffi_lwk_fn_method_issuance_is_null(rt, thisVal,
+                                                                   args, count);
           });
   props["ubrn_uniffi_lwk_fn_method_issuance_is_reissuance"] =
       jsi::Function::createFromHostFunction(
@@ -3274,6 +3326,17 @@ NativeLwk::NativeLwk(jsi::Runtime &rt,
                  const jsi::Value *args, size_t count) -> jsi::Value {
             return this->cpp_uniffi_lwk_fn_method_issuance_token(rt, thisVal,
                                                                  args, count);
+          });
+  props["ubrn_uniffi_lwk_fn_method_issuance_token_satoshi"] =
+      jsi::Function::createFromHostFunction(
+          rt,
+          jsi::PropNameID::forAscii(
+              rt, "ubrn_uniffi_lwk_fn_method_issuance_token_satoshi"),
+          1,
+          [this](jsi::Runtime &rt, const jsi::Value &thisVal,
+                 const jsi::Value *args, size_t count) -> jsi::Value {
+            return this->cpp_uniffi_lwk_fn_method_issuance_token_satoshi(
+                rt, thisVal, args, count);
           });
   props["ubrn_uniffi_lwk_fn_clone_mnemonic"] =
       jsi::Function::createFromHostFunction(
@@ -3773,6 +3836,17 @@ NativeLwk::NativeLwk(jsi::Runtime &rt,
                  const jsi::Value *args, size_t count) -> jsi::Value {
             return this->cpp_uniffi_lwk_fn_free_psetinput(rt, thisVal, args,
                                                           count);
+          });
+  props["ubrn_uniffi_lwk_fn_method_psetinput_issuance"] =
+      jsi::Function::createFromHostFunction(
+          rt,
+          jsi::PropNameID::forAscii(
+              rt, "ubrn_uniffi_lwk_fn_method_psetinput_issuance"),
+          1,
+          [this](jsi::Runtime &rt, const jsi::Value &thisVal,
+                 const jsi::Value *args, size_t count) -> jsi::Value {
+            return this->cpp_uniffi_lwk_fn_method_psetinput_issuance(
+                rt, thisVal, args, count);
           });
   props["ubrn_uniffi_lwk_fn_method_psetinput_issuance_asset"] =
       jsi::Function::createFromHostFunction(
@@ -5466,6 +5540,29 @@ NativeLwk::NativeLwk(jsi::Runtime &rt,
             return this->cpp_uniffi_lwk_checksum_method_issuance_asset(
                 rt, thisVal, args, count);
           });
+  props["ubrn_uniffi_lwk_checksum_method_issuance_asset_satoshi"] =
+      jsi::Function::createFromHostFunction(
+          rt,
+          jsi::PropNameID::forAscii(
+              rt, "ubrn_uniffi_lwk_checksum_method_issuance_asset_satoshi"),
+          0,
+          [this](jsi::Runtime &rt, const jsi::Value &thisVal,
+                 const jsi::Value *args, size_t count) -> jsi::Value {
+            return this->cpp_uniffi_lwk_checksum_method_issuance_asset_satoshi(
+                rt, thisVal, args, count);
+          });
+  props["ubrn_uniffi_lwk_checksum_method_issuance_is_confidential"] =
+      jsi::Function::createFromHostFunction(
+          rt,
+          jsi::PropNameID::forAscii(
+              rt, "ubrn_uniffi_lwk_checksum_method_issuance_is_confidential"),
+          0,
+          [this](jsi::Runtime &rt, const jsi::Value &thisVal,
+                 const jsi::Value *args, size_t count) -> jsi::Value {
+            return this
+                ->cpp_uniffi_lwk_checksum_method_issuance_is_confidential(
+                    rt, thisVal, args, count);
+          });
   props["ubrn_uniffi_lwk_checksum_method_issuance_is_issuance"] =
       jsi::Function::createFromHostFunction(
           rt,
@@ -5475,6 +5572,17 @@ NativeLwk::NativeLwk(jsi::Runtime &rt,
           [this](jsi::Runtime &rt, const jsi::Value &thisVal,
                  const jsi::Value *args, size_t count) -> jsi::Value {
             return this->cpp_uniffi_lwk_checksum_method_issuance_is_issuance(
+                rt, thisVal, args, count);
+          });
+  props["ubrn_uniffi_lwk_checksum_method_issuance_is_null"] =
+      jsi::Function::createFromHostFunction(
+          rt,
+          jsi::PropNameID::forAscii(
+              rt, "ubrn_uniffi_lwk_checksum_method_issuance_is_null"),
+          0,
+          [this](jsi::Runtime &rt, const jsi::Value &thisVal,
+                 const jsi::Value *args, size_t count) -> jsi::Value {
+            return this->cpp_uniffi_lwk_checksum_method_issuance_is_null(
                 rt, thisVal, args, count);
           });
   props["ubrn_uniffi_lwk_checksum_method_issuance_is_reissuance"] =
@@ -5519,6 +5627,17 @@ NativeLwk::NativeLwk(jsi::Runtime &rt,
           [this](jsi::Runtime &rt, const jsi::Value &thisVal,
                  const jsi::Value *args, size_t count) -> jsi::Value {
             return this->cpp_uniffi_lwk_checksum_method_issuance_token(
+                rt, thisVal, args, count);
+          });
+  props["ubrn_uniffi_lwk_checksum_method_issuance_token_satoshi"] =
+      jsi::Function::createFromHostFunction(
+          rt,
+          jsi::PropNameID::forAscii(
+              rt, "ubrn_uniffi_lwk_checksum_method_issuance_token_satoshi"),
+          0,
+          [this](jsi::Runtime &rt, const jsi::Value &thisVal,
+                 const jsi::Value *args, size_t count) -> jsi::Value {
+            return this->cpp_uniffi_lwk_checksum_method_issuance_token_satoshi(
                 rt, thisVal, args, count);
           });
   props["ubrn_uniffi_lwk_checksum_method_network_default_electrum_client"] =
@@ -5724,6 +5843,17 @@ NativeLwk::NativeLwk(jsi::Runtime &rt,
           [this](jsi::Runtime &rt, const jsi::Value &thisVal,
                  const jsi::Value *args, size_t count) -> jsi::Value {
             return this->cpp_uniffi_lwk_checksum_method_psetdetails_signatures(
+                rt, thisVal, args, count);
+          });
+  props["ubrn_uniffi_lwk_checksum_method_psetinput_issuance"] =
+      jsi::Function::createFromHostFunction(
+          rt,
+          jsi::PropNameID::forAscii(
+              rt, "ubrn_uniffi_lwk_checksum_method_psetinput_issuance"),
+          0,
+          [this](jsi::Runtime &rt, const jsi::Value &thisVal,
+                 const jsi::Value *args, size_t count) -> jsi::Value {
+            return this->cpp_uniffi_lwk_checksum_method_psetinput_issuance(
                 rt, thisVal, args, count);
           });
   props["ubrn_uniffi_lwk_checksum_method_psetinput_issuance_asset"] =
@@ -8826,12 +8956,48 @@ jsi::Value NativeLwk::cpp_uniffi_lwk_fn_method_issuance_asset(
 
   return uniffi::lwk::Bridging<RustBuffer>::toJs(rt, callInvoker, value);
 }
+jsi::Value NativeLwk::cpp_uniffi_lwk_fn_method_issuance_asset_satoshi(
+    jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+    size_t count) {
+  RustCallStatus status =
+      uniffi::lwk::Bridging<RustCallStatus>::rustSuccess(rt);
+  auto value = uniffi_lwk_fn_method_issuance_asset_satoshi(
+      uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]), &status);
+  uniffi::lwk::Bridging<RustCallStatus>::copyIntoJs(rt, callInvoker, status,
+                                                    args[count - 1]);
+
+  return uniffi::lwk::Bridging<RustBuffer>::toJs(rt, callInvoker, value);
+}
+jsi::Value NativeLwk::cpp_uniffi_lwk_fn_method_issuance_is_confidential(
+    jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+    size_t count) {
+  RustCallStatus status =
+      uniffi::lwk::Bridging<RustCallStatus>::rustSuccess(rt);
+  auto value = uniffi_lwk_fn_method_issuance_is_confidential(
+      uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]), &status);
+  uniffi::lwk::Bridging<RustCallStatus>::copyIntoJs(rt, callInvoker, status,
+                                                    args[count - 1]);
+
+  return uniffi_jsi::Bridging<int8_t>::toJs(rt, callInvoker, value);
+}
 jsi::Value NativeLwk::cpp_uniffi_lwk_fn_method_issuance_is_issuance(
     jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
     size_t count) {
   RustCallStatus status =
       uniffi::lwk::Bridging<RustCallStatus>::rustSuccess(rt);
   auto value = uniffi_lwk_fn_method_issuance_is_issuance(
+      uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]), &status);
+  uniffi::lwk::Bridging<RustCallStatus>::copyIntoJs(rt, callInvoker, status,
+                                                    args[count - 1]);
+
+  return uniffi_jsi::Bridging<int8_t>::toJs(rt, callInvoker, value);
+}
+jsi::Value NativeLwk::cpp_uniffi_lwk_fn_method_issuance_is_null(
+    jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+    size_t count) {
+  RustCallStatus status =
+      uniffi::lwk::Bridging<RustCallStatus>::rustSuccess(rt);
+  auto value = uniffi_lwk_fn_method_issuance_is_null(
       uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]), &status);
   uniffi::lwk::Bridging<RustCallStatus>::copyIntoJs(rt, callInvoker, status,
                                                     args[count - 1]);
@@ -8880,6 +9046,18 @@ jsi::Value NativeLwk::cpp_uniffi_lwk_fn_method_issuance_token(
   RustCallStatus status =
       uniffi::lwk::Bridging<RustCallStatus>::rustSuccess(rt);
   auto value = uniffi_lwk_fn_method_issuance_token(
+      uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]), &status);
+  uniffi::lwk::Bridging<RustCallStatus>::copyIntoJs(rt, callInvoker, status,
+                                                    args[count - 1]);
+
+  return uniffi::lwk::Bridging<RustBuffer>::toJs(rt, callInvoker, value);
+}
+jsi::Value NativeLwk::cpp_uniffi_lwk_fn_method_issuance_token_satoshi(
+    jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+    size_t count) {
+  RustCallStatus status =
+      uniffi::lwk::Bridging<RustCallStatus>::rustSuccess(rt);
+  auto value = uniffi_lwk_fn_method_issuance_token_satoshi(
       uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]), &status);
   uniffi::lwk::Bridging<RustCallStatus>::copyIntoJs(rt, callInvoker, status,
                                                     args[count - 1]);
@@ -9472,6 +9650,18 @@ jsi::Value NativeLwk::cpp_uniffi_lwk_fn_free_psetinput(
                                                     args[count - 1]);
 
   return jsi::Value::undefined();
+}
+jsi::Value NativeLwk::cpp_uniffi_lwk_fn_method_psetinput_issuance(
+    jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+    size_t count) {
+  RustCallStatus status =
+      uniffi::lwk::Bridging<RustCallStatus>::rustSuccess(rt);
+  auto value = uniffi_lwk_fn_method_psetinput_issuance(
+      uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]), &status);
+  uniffi::lwk::Bridging<RustCallStatus>::copyIntoJs(rt, callInvoker, status,
+                                                    args[count - 1]);
+
+  return uniffi::lwk::Bridging<RustBuffer>::toJs(rt, callInvoker, value);
 }
 jsi::Value NativeLwk::cpp_uniffi_lwk_fn_method_psetinput_issuance_asset(
     jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
@@ -11347,10 +11537,31 @@ jsi::Value NativeLwk::cpp_uniffi_lwk_checksum_method_issuance_asset(
 
   return uniffi_jsi::Bridging<uint16_t>::toJs(rt, callInvoker, value);
 }
+jsi::Value NativeLwk::cpp_uniffi_lwk_checksum_method_issuance_asset_satoshi(
+    jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+    size_t count) {
+  auto value = uniffi_lwk_checksum_method_issuance_asset_satoshi();
+
+  return uniffi_jsi::Bridging<uint16_t>::toJs(rt, callInvoker, value);
+}
+jsi::Value NativeLwk::cpp_uniffi_lwk_checksum_method_issuance_is_confidential(
+    jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+    size_t count) {
+  auto value = uniffi_lwk_checksum_method_issuance_is_confidential();
+
+  return uniffi_jsi::Bridging<uint16_t>::toJs(rt, callInvoker, value);
+}
 jsi::Value NativeLwk::cpp_uniffi_lwk_checksum_method_issuance_is_issuance(
     jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
     size_t count) {
   auto value = uniffi_lwk_checksum_method_issuance_is_issuance();
+
+  return uniffi_jsi::Bridging<uint16_t>::toJs(rt, callInvoker, value);
+}
+jsi::Value NativeLwk::cpp_uniffi_lwk_checksum_method_issuance_is_null(
+    jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+    size_t count) {
+  auto value = uniffi_lwk_checksum_method_issuance_is_null();
 
   return uniffi_jsi::Bridging<uint16_t>::toJs(rt, callInvoker, value);
 }
@@ -11379,6 +11590,13 @@ jsi::Value NativeLwk::cpp_uniffi_lwk_checksum_method_issuance_token(
     jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
     size_t count) {
   auto value = uniffi_lwk_checksum_method_issuance_token();
+
+  return uniffi_jsi::Bridging<uint16_t>::toJs(rt, callInvoker, value);
+}
+jsi::Value NativeLwk::cpp_uniffi_lwk_checksum_method_issuance_token_satoshi(
+    jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+    size_t count) {
+  auto value = uniffi_lwk_checksum_method_issuance_token_satoshi();
 
   return uniffi_jsi::Bridging<uint16_t>::toJs(rt, callInvoker, value);
 }
@@ -11508,6 +11726,13 @@ jsi::Value NativeLwk::cpp_uniffi_lwk_checksum_method_psetdetails_signatures(
     jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
     size_t count) {
   auto value = uniffi_lwk_checksum_method_psetdetails_signatures();
+
+  return uniffi_jsi::Bridging<uint16_t>::toJs(rt, callInvoker, value);
+}
+jsi::Value NativeLwk::cpp_uniffi_lwk_checksum_method_psetinput_issuance(
+    jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+    size_t count) {
+  auto value = uniffi_lwk_checksum_method_psetinput_issuance();
 
   return uniffi_jsi::Bridging<uint16_t>::toJs(rt, callInvoker, value);
 }

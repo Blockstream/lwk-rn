@@ -215,7 +215,16 @@ protected:
                                                      const jsi::Value &thisVal,
                                                      const jsi::Value *args,
                                                      size_t count);
+  jsi::Value cpp_uniffi_lwk_fn_method_issuance_asset_satoshi(
+      jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+      size_t count);
+  jsi::Value cpp_uniffi_lwk_fn_method_issuance_is_confidential(
+      jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+      size_t count);
   jsi::Value cpp_uniffi_lwk_fn_method_issuance_is_issuance(
+      jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+      size_t count);
+  jsi::Value cpp_uniffi_lwk_fn_method_issuance_is_null(
       jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
       size_t count);
   jsi::Value cpp_uniffi_lwk_fn_method_issuance_is_reissuance(
@@ -231,6 +240,9 @@ protected:
                                                      const jsi::Value &thisVal,
                                                      const jsi::Value *args,
                                                      size_t count);
+  jsi::Value cpp_uniffi_lwk_fn_method_issuance_token_satoshi(
+      jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+      size_t count);
   jsi::Value cpp_uniffi_lwk_fn_clone_mnemonic(jsi::Runtime &rt,
                                               const jsi::Value &thisVal,
                                               const jsi::Value *args,
@@ -396,6 +408,9 @@ protected:
                                               const jsi::Value &thisVal,
                                               const jsi::Value *args,
                                               size_t count);
+  jsi::Value cpp_uniffi_lwk_fn_method_psetinput_issuance(
+      jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+      size_t count);
   jsi::Value cpp_uniffi_lwk_fn_method_psetinput_issuance_asset(
       jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
       size_t count);
@@ -932,7 +947,16 @@ protected:
   jsi::Value cpp_uniffi_lwk_checksum_method_issuance_asset(
       jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
       size_t count);
+  jsi::Value cpp_uniffi_lwk_checksum_method_issuance_asset_satoshi(
+      jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+      size_t count);
+  jsi::Value cpp_uniffi_lwk_checksum_method_issuance_is_confidential(
+      jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+      size_t count);
   jsi::Value cpp_uniffi_lwk_checksum_method_issuance_is_issuance(
+      jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+      size_t count);
+  jsi::Value cpp_uniffi_lwk_checksum_method_issuance_is_null(
       jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
       size_t count);
   jsi::Value cpp_uniffi_lwk_checksum_method_issuance_is_reissuance(
@@ -945,6 +969,9 @@ protected:
       jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
       size_t count);
   jsi::Value cpp_uniffi_lwk_checksum_method_issuance_token(
+      jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+      size_t count);
+  jsi::Value cpp_uniffi_lwk_checksum_method_issuance_token_satoshi(
       jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
       size_t count);
   jsi::Value cpp_uniffi_lwk_checksum_method_network_default_electrum_client(
@@ -999,6 +1026,9 @@ protected:
       jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
       size_t count);
   jsi::Value cpp_uniffi_lwk_checksum_method_psetdetails_signatures(
+      jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+      size_t count);
+  jsi::Value cpp_uniffi_lwk_checksum_method_psetinput_issuance(
       jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
       size_t count);
   jsi::Value cpp_uniffi_lwk_checksum_method_psetinput_issuance_asset(

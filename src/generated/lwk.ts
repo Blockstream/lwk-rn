@@ -2099,11 +2099,15 @@ const FfiConverterTypeForeignPersisterLink = new FfiConverterObject(
 
 export interface IssuanceInterface {
   asset(): AssetId | undefined;
+  assetSatoshi(): /*u64*/ bigint | undefined;
+  isConfidential(): boolean;
   isIssuance(): boolean;
+  isNull(): boolean;
   isReissuance(): boolean;
   prevTxid(): TxidInterface | undefined;
   prevVout(): /*u32*/ number | undefined;
   token(): AssetId | undefined;
+  tokenSatoshi(): /*u64*/ bigint | undefined;
 }
 
 export class Issuance
@@ -2135,11 +2139,53 @@ export class Issuance
     );
   }
 
+  public assetSatoshi(): /*u64*/ bigint | undefined {
+    return FfiConverterOptionalUInt64.lift(
+      uniffiCaller.rustCall(
+        /*caller:*/ (callStatus) => {
+          return nativeModule().ubrn_uniffi_lwk_fn_method_issuance_asset_satoshi(
+            uniffiTypeIssuanceObjectFactory.clonePointer(this),
+            callStatus
+          );
+        },
+        /*liftString:*/ FfiConverterString.lift
+      )
+    );
+  }
+
+  public isConfidential(): boolean {
+    return FfiConverterBool.lift(
+      uniffiCaller.rustCall(
+        /*caller:*/ (callStatus) => {
+          return nativeModule().ubrn_uniffi_lwk_fn_method_issuance_is_confidential(
+            uniffiTypeIssuanceObjectFactory.clonePointer(this),
+            callStatus
+          );
+        },
+        /*liftString:*/ FfiConverterString.lift
+      )
+    );
+  }
+
   public isIssuance(): boolean {
     return FfiConverterBool.lift(
       uniffiCaller.rustCall(
         /*caller:*/ (callStatus) => {
           return nativeModule().ubrn_uniffi_lwk_fn_method_issuance_is_issuance(
+            uniffiTypeIssuanceObjectFactory.clonePointer(this),
+            callStatus
+          );
+        },
+        /*liftString:*/ FfiConverterString.lift
+      )
+    );
+  }
+
+  public isNull(): boolean {
+    return FfiConverterBool.lift(
+      uniffiCaller.rustCall(
+        /*caller:*/ (callStatus) => {
+          return nativeModule().ubrn_uniffi_lwk_fn_method_issuance_is_null(
             uniffiTypeIssuanceObjectFactory.clonePointer(this),
             callStatus
           );
@@ -2196,6 +2242,20 @@ export class Issuance
       uniffiCaller.rustCall(
         /*caller:*/ (callStatus) => {
           return nativeModule().ubrn_uniffi_lwk_fn_method_issuance_token(
+            uniffiTypeIssuanceObjectFactory.clonePointer(this),
+            callStatus
+          );
+        },
+        /*liftString:*/ FfiConverterString.lift
+      )
+    );
+  }
+
+  public tokenSatoshi(): /*u64*/ bigint | undefined {
+    return FfiConverterOptionalUInt64.lift(
+      uniffiCaller.rustCall(
+        /*caller:*/ (callStatus) => {
+          return nativeModule().ubrn_uniffi_lwk_fn_method_issuance_token_satoshi(
             uniffiTypeIssuanceObjectFactory.clonePointer(this),
             callStatus
           );
@@ -3520,6 +3580,10 @@ const FfiConverterTypePsetDetails = new FfiConverterObject(
  */
 export interface PsetInputInterface {
   /**
+   * If the input has a (re)issuance, the issuance object
+   */
+  issuance(): IssuanceInterface | undefined;
+  /**
    * If the input has an issuance, the asset id
    */
   issuanceAsset(): AssetId | undefined;
@@ -3561,6 +3625,23 @@ export class PsetInput
     this[pointerLiteralSymbol] = pointer;
     this[destructorGuardSymbol] =
       uniffiTypePsetInputObjectFactory.bless(pointer);
+  }
+
+  /**
+   * If the input has a (re)issuance, the issuance object
+   */
+  public issuance(): IssuanceInterface | undefined {
+    return FfiConverterOptionalTypeIssuance.lift(
+      uniffiCaller.rustCall(
+        /*caller:*/ (callStatus) => {
+          return nativeModule().ubrn_uniffi_lwk_fn_method_psetinput_issuance(
+            uniffiTypePsetInputObjectFactory.clonePointer(this),
+            callStatus
+          );
+        },
+        /*liftString:*/ FfiConverterString.lift
+      )
+    );
   }
 
   /**
@@ -7220,6 +7301,11 @@ const FfiConverterOptionalTypeContract = new FfiConverterOptional(
   FfiConverterTypeContract
 );
 
+// FfiConverter for IssuanceInterface | undefined
+const FfiConverterOptionalTypeIssuance = new FfiConverterOptional(
+  FfiConverterTypeIssuance
+);
+
 // FfiConverter for ScriptInterface | undefined
 const FfiConverterOptionalTypeScript = new FfiConverterOptional(
   FfiConverterTypeScript
@@ -7489,11 +7575,34 @@ function uniffiEnsureInitialized() {
     );
   }
   if (
+    nativeModule().ubrn_uniffi_lwk_checksum_method_issuance_asset_satoshi() !==
+    13924
+  ) {
+    throw new UniffiInternalError.ApiChecksumMismatch(
+      'uniffi_lwk_checksum_method_issuance_asset_satoshi'
+    );
+  }
+  if (
+    nativeModule().ubrn_uniffi_lwk_checksum_method_issuance_is_confidential() !==
+    28108
+  ) {
+    throw new UniffiInternalError.ApiChecksumMismatch(
+      'uniffi_lwk_checksum_method_issuance_is_confidential'
+    );
+  }
+  if (
     nativeModule().ubrn_uniffi_lwk_checksum_method_issuance_is_issuance() !==
     36847
   ) {
     throw new UniffiInternalError.ApiChecksumMismatch(
       'uniffi_lwk_checksum_method_issuance_is_issuance'
+    );
+  }
+  if (
+    nativeModule().ubrn_uniffi_lwk_checksum_method_issuance_is_null() !== 41097
+  ) {
+    throw new UniffiInternalError.ApiChecksumMismatch(
+      'uniffi_lwk_checksum_method_issuance_is_null'
     );
   }
   if (
@@ -7525,6 +7634,14 @@ function uniffiEnsureInitialized() {
   ) {
     throw new UniffiInternalError.ApiChecksumMismatch(
       'uniffi_lwk_checksum_method_issuance_token'
+    );
+  }
+  if (
+    nativeModule().ubrn_uniffi_lwk_checksum_method_issuance_token_satoshi() !==
+    10642
+  ) {
+    throw new UniffiInternalError.ApiChecksumMismatch(
+      'uniffi_lwk_checksum_method_issuance_token_satoshi'
     );
   }
   if (
@@ -7659,6 +7776,14 @@ function uniffiEnsureInitialized() {
   ) {
     throw new UniffiInternalError.ApiChecksumMismatch(
       'uniffi_lwk_checksum_method_psetdetails_signatures'
+    );
+  }
+  if (
+    nativeModule().ubrn_uniffi_lwk_checksum_method_psetinput_issuance() !==
+    24131
+  ) {
+    throw new UniffiInternalError.ApiChecksumMismatch(
+      'uniffi_lwk_checksum_method_psetinput_issuance'
     );
   }
   if (
