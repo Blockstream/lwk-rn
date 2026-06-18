@@ -8607,7 +8607,7 @@ __metadata:
     release-it: ^17.10.0
     turbo: ^1.10.7
     typescript: ^5.2.2
-    uniffi-bindgen-react-native: ^0.28.3-1
+    uniffi-bindgen-react-native: ^0.29.3-1
   peerDependencies:
     react: "*"
     react-native: "*"
@@ -12439,13 +12439,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uniffi-bindgen-react-native@npm:^0.28.3-1":
-  version: 0.28.3-3
-  resolution: "uniffi-bindgen-react-native@npm:0.28.3-3"
+"uniffi-bindgen-react-native@npm:^0.29.3-1":
+  version: 0.29.3-1
+  resolution: "uniffi-bindgen-react-native@npm:0.29.3-1"
   bin:
     ubrn: bin/cli.cjs
     uniffi-bindgen-react-native: bin/cli.cjs
-  checksum: 743d91b1b51bca9bcd6af1e65cc8771846f3c28678c2e9cdf5f38f40a0e2fa31b406150ff5fc9b31d795c0b75159c41bd30119b016f90130cc8e0c11b37adcb7
+  checksum: 1cd0da57d11178823658c5e9a080570b65ec3f973ffac3c9ae131399681b5825727aa3ac397060e5e9aebe524194f9dddcd70acd14968d7c8f23f1bf66e7032b
   languageName: node
   linkType: hard
 

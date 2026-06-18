@@ -1,6 +1,6 @@
 {
   "name": "lwk-rn",
-  "version": "0.18.0-2.0.0",
+  "version": "0.18.0",
   "description": "Liquid Wallet Kit react native module",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
