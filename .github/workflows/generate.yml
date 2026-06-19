@@ -13,7 +13,7 @@ jobs:
           uses: ./.github/actions/setup
 
         - name: Setup rust toolchain
-          uses: dtolnay/rust-toolchain@1.81.0
+          uses: dtolnay/rust-toolchain@1.85.0
           with:
             targets: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android
         
@@ -42,7 +42,7 @@ jobs:
           uses: ./.github/actions/setup
 
         - name: Setup rust toolchain
-          uses: dtolnay/rust-toolchain@1.81.0
+          uses: dtolnay/rust-toolchain@1.85.0
           with:
             targets: x86_64-apple-ios,aarch64-apple-ios,aarch64-apple-ios-sim
         
